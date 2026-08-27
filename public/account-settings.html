@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Manage your Fitness Buddy profile and security settings." />
+  <title>Account Settings · Fitness Buddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="/theme.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a class="brand" href="/" aria-label="Fitness Buddy home">
+        <span class="brand-mark" aria-hidden="true">💪</span>
+        Fitness Buddy
+      </a>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">☀️</button>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/">Dashboard</a></li>
+        <li><a href="#" id="nav-logout">Log out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container" aria-label="Account Settings">
+      <header class="section-head" style="text-align: center;">
+        <p class="section-kicker">Settings</p>
+        <h2 class="section-title">Manage Account &amp; Profile</h2>
+        <p class="section-desc" style="margin: 0 auto;">Keep your wellness details accurate and secure.</p>
+      </header>
+
+      <div class="dashboard-row-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; align-items: stretch;">
+        
+        <!-- Personal Details Card -->
+        <div class="card" style="display: flex; flex-direction: column; height: 100%;">
+          <h3 class="card-title" style="color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem;">👤 Personal Profile</h3>
+          
+          <form id="profile-form" novalidate style="display: flex; flex-direction: column; gap: 1rem; flex-grow: 1;">
+            
+            <div>
+              <label for="profile-email" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Email Address</label>
+              <input type="email" id="profile-email" disabled style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-muted); font-size: 0.9375rem;" />
+            </div>
+
+            <div>
+              <label for="profile-name" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Name</label>
+              <input type="text" id="profile-name" placeholder="Your Name" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;" />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label for="profile-weight" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Weight (kg)</label>
+                <input type="number" id="profile-weight" placeholder="e.g. 70" required step="any" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;" />
+              </div>
+              <div>
+                <label for="profile-height" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Height (cm)</label>
+                <input type="number" id="profile-height" placeholder="e.g. 175" required step="any" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;" />
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label for="profile-age" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Age</label>
+                <input type="number" id="profile-age" placeholder="e.g. 25" required step="any" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;" />
+              </div>
+              <div>
+                <label for="profile-gender" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Gender</label>
+                <select id="profile-gender" required style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;">
+                  <option value="">Select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="profile-goal" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Goal</label>
+              <select id="profile-goal" required style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;">
+                <option value="">Select goal</option>
+                <option value="maintain">Maintain weight</option>
+                <option value="lose">Lose weight</option>
+                <option value="gain">Gain weight</option>
+              </select>
+            </div>
+
+            <div style="margin-top: auto; padding-top: 1rem;">
+              <button type="submit" class="btn btn-primary btn-block" id="profile-save-btn">Update Profile</button>
+            </div>
+            
+            <p class="auth-error" id="profile-error" role="status" aria-live="polite" style="display:none; color: var(--danger); font-size: 0.875rem; text-align: center; margin: 0.5rem 0 0;"></p>
+            <p class="section-desc" id="profile-success" style="display:none; color: var(--accent); font-weight: 600; font-size: 0.875rem; text-align: center; margin: 0.5rem 0 0;">
+              Profile settings saved successfully.
+            </p>
+          </form>
+        </div>
+
+        <!-- Security / Password Card -->
+        <div class="card" style="display: flex; flex-direction: column; height: 100%;">
+          <h3 class="card-title" style="color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem;">🔒 Security &amp; Password</h3>
+          
+          <form id="change-form" novalidate style="display: flex; flex-direction: column; gap: 1rem; flex-grow: 1;">
+            
+            <div class="auth-field">
+              <label for="current-password" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Current password</label>
+              <div class="auth-pass" style="position: relative; display: flex; align-items: center;">
+                <input id="current-password" type="password" autocomplete="current-password" placeholder="••••••••" required style="width: 100%; padding: 0.65rem 0.85rem; padding-right: 3rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;" />
+                <button type="button" class="auth-pass-toggle" id="toggle-current" aria-pressed="false" aria-label="Show current password" style="position: absolute; right: 8px; background: transparent; border: none; color: var(--text-muted); font-size: 0.8rem; cursor: pointer; padding: 0.25rem 0.5rem;">Show</button>
+              </div>
+            </div>
+
+            <div class="auth-field">
+              <label for="new-password" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">New password</label>
+              <div class="auth-pass" style="position: relative; display: flex; align-items: center;">
+                <input id="new-password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required minlength="8" style="width: 100%; padding: 0.65rem 0.85rem; padding-right: 3rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;" />
+                <button type="button" class="auth-pass-toggle" id="toggle-new" aria-pressed="false" aria-label="Show new password" style="position: absolute; right: 8px; background: transparent; border: none; color: var(--text-muted); font-size: 0.8rem; cursor: pointer; padding: 0.25rem 0.5rem;">Show</button>
+              </div>
+              <div class="auth-hints" aria-live="polite" style="margin-top: 0.5rem;">
+                <div class="auth-meter" aria-hidden="true" style="width: 100%; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 0.25rem;">
+                  <span id="strength-bar" style="display: block; height: 100%; width: 0%; background: var(--accent); transition: width 0.3s var(--ease);"></span>
+                </div>
+                <div class="auth-hint-row" style="display: flex; justify-content: space-between; font-size: 0.75rem;">
+                  <span id="strength-label" class="auth-strength is-weak" style="font-weight: 700; color: var(--danger);">Weak</span>
+                  <span class="auth-hint-text" id="strength-text" style="color: var(--text-muted);">Use 8+ chars, with a number and a symbol.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="auth-field">
+              <label for="confirm-password" style="display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Confirm new password</label>
+              <div class="auth-pass" style="position: relative; display: flex; align-items: center;">
+                <input id="confirm-password" type="password" autocomplete="new-password" placeholder="Re-type your password" required minlength="8" style="width: 100%; padding: 0.65rem 0.85rem; padding-right: 3rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem;" />
+                <button type="button" class="auth-pass-toggle" id="toggle-confirm" aria-pressed="false" aria-label="Show confirm password" style="position: absolute; right: 8px; background: transparent; border: none; color: var(--text-muted); font-size: 0.8rem; cursor: pointer; padding: 0.25rem 0.5rem;">Show</button>
+              </div>
+              <p class="auth-inline-error" id="confirm-error" role="status" aria-live="polite" style="display:none; color: var(--danger); font-size: 0.8rem; margin: 0.25rem 0 0;"></p>
+            </div>
+
+            <div style="margin-top: auto; padding-top: 1rem;">
+              <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Update Password</button>
+            </div>
+
+            <p class="auth-error" id="error" role="status" aria-live="polite" style="display:none; color: var(--danger); font-size: 0.875rem; text-align: center; margin: 0.5rem 0 0;"></p>
+            <p class="section-desc" id="success" style="display:none; color: var(--accent); font-weight: 600; font-size: 0.875rem; text-align: center; margin: 0.5rem 0 0;">
+              Password updated successfully.
+            </p>
+          </form>
+        </div>
+        
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="text-align: center; padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 4rem;">
+    <p style="color: var(--text-muted); font-size: 0.875rem;">© 2026 Fitness Buddy</p>
+  </footer>
+
+  <script>
+    let currentGoalProtein = 100;
+    let currentGoalCarbs = 250;
+    let currentGoalFat = 70;
+
+    async function requireLoginAndLoadData() {
+      try {
+        // Load User Session Info
+        const meRes = await fetch("/api/auth/me", { credentials: "include" });
+        if (!meRes.ok) {
+          window.location.href = "/login.html";
+          return;
+        }
+        const meData = await meRes.json();
+        document.getElementById("profile-email").value = meData.user?.email || "";
+
+        // Load User Profile Data
+        const profileRes = await fetch("/api/profile", { credentials: "include" });
+        if (profileRes.ok) {
+          const profileData = await profileRes.json();
+          if (profileData.profile) {
+            document.getElementById("profile-name").value = profileData.profile.name || "";
+            document.getElementById("profile-weight").value = profileData.profile.weight || "";
+            document.getElementById("profile-height").value = profileData.profile.height || "";
+            document.getElementById("profile-age").value = profileData.profile.age || "";
+            document.getElementById("profile-gender").value = profileData.profile.gender || "";
+            document.getElementById("profile-goal").value = profileData.profile.goal || "";
+
+            currentGoalProtein = profileData.profile.goal_protein || 100;
+            currentGoalCarbs = profileData.profile.goal_carbs || 250;
+            currentGoalFat = profileData.profile.goal_fat || 70;
+          }
+        }
+      } catch (e) {
+        console.error("Error loading account data:", e);
+        window.location.href = "/login.html";
+      }
+    }
+
+    async function onSaveProfile(ev) {
+      ev.preventDefault();
+      
+      const errorEl = document.getElementById("profile-error");
+      const successEl = document.getElementById("profile-success");
+      errorEl.style.display = "none";
+      successEl.style.display = "none";
+
+      const name = document.getElementById("profile-name").value.trim();
+      const weight = parseFloat(document.getElementById("profile-weight").value);
+      const height = parseFloat(document.getElementById("profile-height").value);
+      const age = parseInt(document.getElementById("profile-age").value, 10);
+      const gender = document.getElementById("profile-gender").value;
+      const goal = document.getElementById("profile-goal").value;
+
+      if (isNaN(weight) || isNaN(height) || isNaN(age) || !gender || !goal) {
+        errorEl.textContent = "Please fill in all profile stats correctly.";
+        errorEl.style.display = "block";
+        return;
+      }
+
+      // Automatically recalculate targets based on weight, height, age, gender, goal
+      let bmr;
+      if (gender === 'male') {
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+      } else {
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+      }
+
+      const activityMultiplier = 1.55;
+      const tdee = bmr * activityMultiplier;
+      let calorieTarget = tdee;
+      if (goal === 'lose') calorieTarget = tdee - 500;
+      else if (goal === 'gain') calorieTarget = tdee + 300;
+
+      const proteinGrams = Math.round(weight * 1.8);
+      const proteinCals = proteinGrams * 4;
+      const fatCals = calorieTarget * 0.25;
+      const fatGrams = Math.round(fatCals / 9);
+      const remainingCals = calorieTarget - (proteinCals + fatCals);
+      const carbsGrams = Math.round(remainingCals / 4);
+
+      const btn = document.getElementById("profile-save-btn");
+      btn.disabled = true;
+
+      try {
+        const r = await fetch("/api/profile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            name,
+            weight,
+            height,
+            age,
+            gender,
+            goal,
+            goal_protein: proteinGrams,
+            goal_carbs: carbsGrams,
+            goal_fat: fatGrams
+          })
+        });
+        if (r.ok) {
+          successEl.style.display = "block";
+          // Log weight in daily metrics as well
+          const today = new Date().toLocaleDateString("en-CA");
+          await fetch(`/api/metrics/${today}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ weight })
+          }).catch(() => {});
+        } else {
+          const data = await r.json();
+          errorEl.textContent = data.error || "Failed to update profile settings.";
+          errorEl.style.display = "block";
+        }
+      } catch (_) {
+        errorEl.textContent = "Network error. Failed to save profile.";
+        errorEl.style.display = "block";
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    // Security Form Handlers
+    function setError(msg) {
+      const el = document.getElementById("error");
+      if (!el) return;
+      el.textContent = msg || "";
+      el.style.display = msg ? "block" : "none";
+    }
+
+    function setConfirmError(msg) {
+      const el = document.getElementById("confirm-error");
+      if (!el) return;
+      el.textContent = msg || "";
+      el.style.display = msg ? "block" : "none";
+    }
+
+    function scorePassword(pw) {
+      const s = String(pw || "");
+      let score = 0;
+      if (s.length >= 8) score += 1;
+      if (s.length >= 12) score += 1;
+      if (/[A-Z]/.test(s)) score += 1;
+      if (/[0-9]/.test(s)) score += 1;
+      if (/[^A-Za-z0-9]/.test(s)) score += 1;
+      return score;
+    }
+
+    function updateStrengthUI() {
+      const input = document.getElementById("new-password");
+      const bar = document.getElementById("strength-bar");
+      const label = document.getElementById("strength-label");
+      const text = document.getElementById("strength-text");
+      if (!input || !bar || !label || !text) return;
+
+      const score = scorePassword(input.value);
+      const pct = Math.min(100, Math.round((score / 5) * 100));
+      bar.style.width = pct + "%";
+
+      label.className = "";
+      label.classList.add("auth-strength");
+      if (score <= 2) {
+        label.textContent = "Weak";
+        label.style.color = "var(--danger)";
+        text.textContent = "Use 8+ chars, with a number and a symbol.";
+      } else if (score <= 4) {
+        label.textContent = "Okay";
+        label.style.color = "#fbbf24"; // Amber
+        text.textContent = "Nice—add length or mix symbols/uppercase.";
+      } else {
+        label.textContent = "Strong";
+        label.style.color = "var(--accent)";
+        text.textContent = "Great—this looks strong.";
+      }
+    }
+
+    function wireToggle(inputId, btnId) {
+      const input = document.getElementById(inputId);
+      const btn = document.getElementById(btnId);
+      if (!input || !btn) return;
+      btn.addEventListener("click", function () {
+        const showing = input.type === "text";
+        input.type = showing ? "password" : "text";
+        btn.textContent = showing ? "Show" : "Hide";
+        btn.setAttribute("aria-pressed", showing ? "false" : "true");
+        input.focus();
+      });
+    }
+
+    function validateMatch() {
+      const pw = String(document.getElementById("new-password")?.value || "");
+      const cpw = String(document.getElementById("confirm-password")?.value || "");
+      if (!cpw) {
+        setConfirmError("");
+        return true;
+      }
+      if (pw !== cpw) {
+        setConfirmError("Passwords do not match.");
+        return false;
+      }
+      setConfirmError("");
+      return true;
+    }
+
+    async function onSubmitPassword(ev) {
+      ev.preventDefault();
+      setError("");
+      document.getElementById("success").style.display = "none";
+      if (!validateMatch()) return;
+
+      const currentPassword = String(document.getElementById("current-password")?.value || "");
+      const newPassword = String(document.getElementById("new-password")?.value || "");
+      const confirmPassword = String(document.getElementById("confirm-password")?.value || "");
+      if (newPassword !== confirmPassword) {
+        setConfirmError("Passwords do not match.");
+        return;
+      }
+
+      const btn = document.getElementById("submit-btn");
+      btn.disabled = true;
+
+      try {
+        const r = await fetch("/api/auth/change-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ currentPassword, newPassword }),
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          setError(data?.error || `Change failed (HTTP ${r.status}).`);
+          return;
+        }
+        document.getElementById("success").style.display = "block";
+        document.getElementById("current-password").value = "";
+        document.getElementById("new-password").value = "";
+        document.getElementById("confirm-password").value = "";
+        updateStrengthUI();
+      } catch (_) {
+        setError("Network error. Is the server running?");
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+      requireLoginAndLoadData();
+      
+      document.getElementById("nav-logout")?.addEventListener("click", async function (e) {
+        e.preventDefault();
+        try {
+          await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
+        } catch (_) {}
+        window.location.href = "/login.html";
+      });
+
+      document.getElementById("profile-form").addEventListener("submit", onSaveProfile);
+
+      wireToggle("current-password", "toggle-current");
+      wireToggle("new-password", "toggle-new");
+      wireToggle("confirm-password", "toggle-confirm");
+      document.getElementById("new-password")?.addEventListener("input", updateStrengthUI);
+      document.getElementById("new-password")?.addEventListener("input", validateMatch);
+      document.getElementById("confirm-password")?.addEventListener("input", validateMatch);
+      updateStrengthUI();
+      document.getElementById("change-form")?.addEventListener("submit", onSubmitPassword);
+    });
+  </script>
+</body>
+</html>

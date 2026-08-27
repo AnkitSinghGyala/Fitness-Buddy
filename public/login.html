@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Login to Fitness Buddy" />
+  <title>Login · Fitness Buddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="/theme.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a class="brand" href="/" aria-label="Fitness Buddy home">
+        <span class="brand-mark" aria-hidden="true">💪</span>
+        Fitness Buddy
+      </a>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">☀️</button>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="register.html">Create account</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container auth-section" aria-label="Login">
+      <header class="section-head auth-head">
+        <p class="section-kicker">Welcome back</p>
+        <h2 class="section-title">Login</h2>
+      </header>
+
+      <div class="auth-layout">
+        <div class="card auth-card">
+          <form id="login-form" novalidate>
+            <div class="auth-grid">
+              <div class="auth-field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+              </div>
+              <div class="auth-field">
+                <label for="password">Password</label>
+                <div class="auth-pass">
+                  <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required minlength="6" />
+                  <button type="button" class="auth-pass-toggle" id="toggle-password" aria-pressed="false" aria-label="Show password">Show</button>
+                </div>
+              </div>
+            </div>
+            <div class="button-group">
+              <button type="submit" class="btn btn-primary btn-block" id="login-btn">Login</button>
+            </div>
+            <p class="auth-error" id="error" role="status" aria-live="polite"></p>
+            <p class="section-desc" style="margin-top: 1rem;">
+              Don’t have an account? <a href="register.html">Register</a>
+            </p>
+            <p class="section-desc" style="margin-top: 0.5rem;">
+              Forgot password? <a href="forgot-password.html">Reset it</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    async function checkAlreadyLoggedIn() {
+      try {
+        const r = await fetch("/api/auth/me", { credentials: "include" });
+        if (r.ok) window.location.href = "/";
+      } catch (_) {}
+    }
+
+    function wireShowPassword() {
+      const input = document.getElementById("password");
+      const btn = document.getElementById("toggle-password");
+      if (!input || !btn) return;
+      btn.addEventListener("click", function () {
+        const showing = input.type === "text";
+        input.type = showing ? "password" : "text";
+        btn.textContent = showing ? "Show" : "Hide";
+        btn.setAttribute("aria-pressed", showing ? "false" : "true");
+        btn.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+        input.focus();
+      });
+    }
+
+    function setError(msg) {
+      const el = document.getElementById("error");
+      if (!el) return;
+      el.textContent = msg || "";
+      el.style.display = msg ? "block" : "none";
+    }
+
+    async function onSubmit(ev) {
+      ev.preventDefault();
+      setError("");
+
+      const email = String(document.getElementById("email")?.value || "").trim();
+      const password = String(document.getElementById("password")?.value || "");
+      const btn = document.getElementById("login-btn");
+      if (btn) btn.disabled = true;
+
+      try {
+        const r = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          const msg = data?.error || `Login failed (HTTP ${r.status}).`;
+          setError(msg);
+          return;
+        }
+        window.location.href = "/";
+      } catch (e) {
+        setError("Network error. Is the server running?");
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    document.getElementById("login-form")?.addEventListener("submit", onSubmit);
+    window.addEventListener("DOMContentLoaded", function () {
+      checkAlreadyLoggedIn();
+      wireShowPassword();
+    });
+  </script>
+</body>
+</html>
+

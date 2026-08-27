@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fitness Buddy — track meals, workouts, and get AI nutrition tips." />
+  <title>Fitness Buddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="/theme.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a class="brand" href="#hero" aria-label="Fitness Buddy home">
+        <span class="brand-mark" aria-hidden="true">💪</span>
+        Fitness Buddy
+      </a>
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div id="streak-badge" class="streak-badge" style="display: none; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: var(--radius-sm); border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.08); color: #f59e0b; font-size: 0.85rem; font-weight: 700; box-shadow: 0 0 10px rgba(245, 158, 11, 0.1); transition: all 0.3s var(--ease);" title="Consecutive days logged">
+          <span style="font-size: 1rem; animation: pulseStreak 1.5s infinite var(--ease);">🔥</span>
+          <span id="streak-count">0</span>-Day Streak
+        </div>
+        <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">☀️</button>
+      </div>  <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false" id="nav-toggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li id="nav-login-item"><a href="login.html">Login</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#tracker">Tracker</a></li>
+        <li><a href="#chatbot">AI Coach</a></li>
+        <li id="nav-profile-item" class="nav-profile">
+          <button type="button" class="profile-trigger" id="profile-trigger" aria-haspopup="menu" aria-expanded="false">
+            <span class="profile-avatar" aria-hidden="true">👤</span>
+            <span class="profile-label">Account</span>
+          </button>
+          <div class="profile-menu" id="profile-menu" role="menu" aria-label="Account menu">
+            <div class="profile-email" id="profile-email" role="presentation">—</div>
+            <div class="profile-divider" role="presentation"></div>
+            <a class="profile-item profile-link" href="/account-settings.html" role="menuitem">Account settings</a>
+          </div>
+        </li>
+        <li id="nav-logout-item" class="nav-logout">
+          <button type="button" class="nav-logout-btn" id="header-logout-btn">Log out</button>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <div id="app-content">
+    <section id="hero" class="hero container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <p class="hero-badge" aria-hidden="true">✨ AI-assisted wellness</p>
+          <h1 id="dashboard-welcome">Your diet &amp; fitness companion</h1>
+          <p class="hero-lead">
+            Track meals and workouts, see macros at a glance, and chat with an AI coach — built for clarity on any screen.
+          </p>
+          <div class="hero-actions">
+            <a href="#tracker" class="btn btn-primary">Start tracking</a>
+            <a href="#chatbot" class="btn btn-ghost">Ask AI coach</a>
+          </div>
+          <div class="hero-stats">
+            <a href="#tracker" class="stat-pill"><strong>Macros</strong><span>Protein · carbs · fat</span></a>
+            <a href="#timer-display" class="stat-pill"><strong>Timer</strong><span>Workout burn</span></a>
+            <a href="/plans" class="stat-pill"><strong>Plans</strong><span>Diet + weekly split</span></a>
+          </div>
+          <button type="button" class="link-help" onclick="getHelp('hero')">Need a quick tour? Open the coach →</button>
+        </div>
+        <div class="hero-visual">
+          <img id="hero-img" src="/images/fitness_hero_dark.png" alt="Fitness Buddy Progress" class="responsive-graphic" />
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section container">
+      <header class="section-head">
+        <p class="section-kicker">Why it works</p>
+        <h2 class="section-title">Everything in one calm dashboard</h2>
+        <p class="section-desc">Large tap targets, readable type, and layouts that stack cleanly on phones and tablets.</p>
+      </header>
+      <div class="feature-grid">
+        <article class="feature-card" onclick="scrollToAndHighlight('food-panel')" style="cursor: pointer;">
+          <div class="feature-icon" aria-hidden="true">🍽️</div>
+          <h3>Food &amp; macros</h3>
+          <p>Preset foods, custom entries, and daily macro targets aligned to your goals.</p>
+        </article>
+        <article class="feature-card" onclick="scrollToAndHighlight('exercise-panel')" style="cursor: pointer;">
+          <div class="feature-icon" aria-hidden="true">🏃</div>
+          <h3>Exercise timer</h3>
+          <p>Log sessions with a simple stopwatch and estimated calories burned.</p>
+        </article>
+        <article class="feature-card" onclick="scrollToAndHighlight('weight-tracker-panel')" style="cursor: pointer;">
+          <div class="feature-icon" aria-hidden="true">⚖️</div>
+          <h3>Weight tracker</h3>
+          <p>Track daily body weight and monitor your 7-day weight trend.</p>
+        </article>
+        <article class="feature-card" onclick="scrollToAndHighlight('chatbot')" style="cursor: pointer;">
+          <div class="feature-icon" aria-hidden="true">🤖</div>
+          <h3>AI coach</h3>
+          <p>Ask questions anytime; works with your API when available, or helpful offline tips.</p>
+        </article>
+      </div>
+      <button type="button" class="link-help" onclick="getHelp('features')">Learn more from the coach →</button>
+    </section>
+
+    <section id="tracker" class="section container">
+      <header class="section-head">
+        <p class="section-kicker">Daily tracker</p>
+        <h2 class="section-title">Profile, meals &amp; movement</h2>
+        <p class="section-desc">Fill in your details, get recommendations, then log food and exercise. Charts update as you go.</p>
+      </header>
+
+      <div class="card date-navigator" style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-radius: var(--radius-lg); background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow);">
+        <button type="button" id="prev-date-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; margin: 0; font-size: 0.9rem;">← Prev Day</button>
+        <div style="text-align: center;">
+          <span id="current-date-display" style="font-size: 1.15rem; font-weight: 700; color: var(--text);">Loading date...</span>
+          <br>
+          <span id="date-label-sub" style="font-size: 0.8rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Today</span>
+        </div>
+        <button type="button" id="next-date-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; margin: 0; font-size: 0.9rem;">Next Day →</button>
+      </div>
+
+      <div class="tracker-layout">
+        <div class="tracker-left-column">
+          <div class="user-input-section card" id="weight-tracker-panel">
+            <form onsubmit="event.preventDefault(); logDailyWeight();" style="margin: 0;">
+              <fieldset style="border: none; padding: 0; margin: 0;">
+                <legend style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: none; padding-bottom: 0; width: auto; color: var(--text);">
+                  ⚖️ Weight Tracker
+                </legend>
+                <div class="steps-input-row" style="margin-top: 0.5rem;">
+                  <input type="number" id="weight-input" placeholder="Weight (kg)" step="any" min="1" max="500" required />
+                  <button type="submit" class="btn btn-primary btn-sm" style="margin: 0; padding: 0.45rem 1.25rem;">Log Weight</button>
+                </div>
+                <p id="logged-weight-display" style="font-size: 0.875rem; font-weight: 500; color: var(--text-muted); margin: 0.75rem 0 0 0; display: flex; align-items: center; gap: 0.35rem;">
+                  <span>Today's Logged Weight:</span>
+                  <strong style="color: var(--accent);" id="logged-weight-value">not logged</strong>
+                </p>
+              </fieldset>
+            </form>
+          </div>
+
+          <!-- Hidden inputs to preserve backwards compatibility with javascript profile targets code -->
+          <div style="display: none;">
+            <input type="number" id="weight" />
+            <input type="number" id="height" />
+            <input type="number" id="age" />
+            <select id="gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <select id="goal">
+              <option value="maintain">Maintain weight</option>
+              <option value="lose">Lose weight</option>
+              <option value="gain">Gain weight</option>
+            </select>
+            <input type="number" id="goal-protein" />
+            <input type="number" id="goal-carbs" />
+            <input type="number" id="goal-fat" />
+            <div id="calorie-recommendation"></div>
+          </div>
+
+          <!-- Dynamic Running Character Visual Card -->
+          <div class="card character-card" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.25rem;">
+            <h4 class="card-title" style="margin-bottom: 0.5rem; align-self: flex-start;">Live Activity Status</h4>
+            <svg width="100" height="110" viewBox="0 0 100 120" class="running-character" aria-label="Animated running character">
+              <defs>
+                <filter id="character-glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <line x1="10" y1="105" x2="90" y2="105" stroke="var(--border)" stroke-width="3" stroke-linecap="round" />
+              <line x1="30" y1="105" x2="70" y2="105" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" class="track-speedline" />
+              <g class="runner-body" transform="translate(10, 0)">
+                <circle cx="50" cy="25" r="8" fill="var(--text)" />
+                <path d="M50 33 L46 60" stroke="var(--text)" stroke-width="8" stroke-linecap="round" />
+                <g class="arm-left">
+                  <path d="M50 35 L40 48 L55 58" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                </g>
+                <g class="leg-left">
+                  <path d="M46 60 L32 78 L52 98" stroke="var(--text)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                </g>
+                <g class="leg-right">
+                  <path d="M46 60 L62 76 L48 96" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#character-glow)" />
+                </g>
+                <g class="arm-right">
+                  <path d="M50 35 L62 46 L50 58" stroke="var(--text)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                </g>
+              </g>
+            </svg>
+            <span style="font-size: 0.85rem; color: var(--accent); font-weight: 600; margin-top: 0.5rem; letter-spacing: 0.05em;" id="character-status-text">Active Workout Mode</span>
+          </div>
+
+          <!-- Progress Tracking Dashboard Card -->
+          <div class="card progress-card">
+            <h3 class="card-title" style="margin-bottom: 1.25rem;">Daily Progress Tracker</h3>
+            
+            <!-- Calories & Macros Summary Box -->
+            <div style="background: rgba(45, 212, 191, 0.05); border: 1px solid rgba(45, 212, 191, 0.2); border-radius: var(--radius-sm); padding: 0.85rem; margin-bottom: 1.25rem;">
+              <div id="total-calories" style="font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: 0.35rem;">Net calories: 0 kcal</div>
+              <div id="macro-totals" style="font-size: 0.825rem; color: var(--text-muted); line-height: 1.4;"></div>
+              
+              <!-- Warning container -->
+              <div id="goal-exceeded-warning" style="display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius-sm); padding: 0.5rem; margin-top: 0.65rem; font-size: 0.75rem; color: #f87171; font-weight: 600; align-items: center; gap: 0.35rem;">
+                ⚠️ <span id="warning-text">Warning: Exceeded daily target!</span>
+              </div>
+            </div>
+            
+            <!-- Water Intake Section -->
+            <div class="progress-section">
+              <h4>💧 Water Intake</h4>
+              <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 0.5rem; margin-top: 0.5rem;">
+                <!-- CSS Animated Water Glass -->
+                <div class="water-glass-container" style="position: relative; width: 50px; height: 65px; border: 3px solid var(--text); border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.03); flex-shrink: 0;">
+                  <div id="water-glass-fill" style="position: absolute; bottom: 0; left: 0; right: 0; height: 0%; background: linear-gradient(180deg, #38bdf8, #0284c7); transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center;">
+                    <div class="water-wave" style="position: absolute; top: -4px; left: 0; right: 0; height: 8px; background: rgba(56, 189, 248, 0.4); border-radius: 50%; animation: waveAnim 2s infinite linear;"></div>
+                  </div>
+                </div>
+                <!-- Text progress & buttons -->
+                <div style="flex: 1;">
+                  <div class="progress-meter-wrap" style="margin-bottom: 0.35rem;">
+                    <div id="water-progress-fill" class="progress-meter-fill"></div>
+                  </div>
+                  <div class="progress-text">
+                    <span id="water-progress-text">0 ml / 2000 ml</span>
+                    <span id="water-percentage">0%</span>
+                  </div>
+                  <div class="dashboard-btn-group" style="margin-top: 0.4rem;">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="addWater(250)">🥛 +250ml</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="addWater(500)">🍼 +500ml</button>
+                    <button type="button" class="btn btn-ghost btn-sm" onclick="resetWater()" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; border-color: transparent;">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Steps Tracker Section -->
+            <div class="progress-section">
+              <h4>🚶 Steps Count</h4>
+              <div class="progress-meter-wrap">
+                <div id="steps-progress-fill" class="progress-meter-fill"></div>
+              </div>
+              <div class="progress-text">
+                <span id="steps-progress-text">0 / 10000 steps</span>
+                <span id="steps-percentage">0%</span>
+              </div>
+              <div class="steps-input-row">
+                <input type="number" id="steps-to-add" placeholder="Steps (e.g. 1000)" min="1" />
+                <button type="button" class="btn btn-primary btn-sm" onclick="logSteps()" style="padding: 0.5rem 0.75rem;">Log</button>
+                <button type="button" class="btn btn-ghost btn-sm" onclick="resetSteps()" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; border-color: transparent;">Reset</button>
+              </div>
+            </div>
+
+            <!-- Active Minutes Section -->
+            <div class="progress-section">
+              <h4>⏱️ Active Exercise</h4>
+              <div class="progress-meter-wrap">
+                <div id="active-progress-fill" class="progress-meter-fill"></div>
+              </div>
+              <div class="progress-text">
+                <span id="active-progress-text">0 / 60 mins</span>
+                <span id="active-percentage">0%</span>
+              </div>
+              <div class="steps-input-row">
+                <input type="number" id="active-to-add" placeholder="Mins (e.g. 15)" min="1" />
+                <button type="button" class="btn btn-primary btn-sm" onclick="logActiveMinutes()" style="padding: 0.5rem 0.75rem;">Log</button>
+                <button type="button" class="btn btn-ghost btn-sm" onclick="resetActiveMinutes()" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; border-color: transparent;">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="tracker-panels">
+            <!-- Premium AI Photo Scanner Card -->
+            <div class="panel scanner-card" id="ai-scanner-panel" style="background: linear-gradient(135deg, rgba(45, 212, 191, 0.05), rgba(168, 85, 247, 0.05)); border: 2px solid rgba(45, 212, 191, 0.2); box-shadow: 0 8px 32px rgba(45, 212, 191, 0.1); position: relative; overflow: hidden; margin-bottom: 1.5rem;">
+              
+              <!-- Subtle decorative gradient orb in the background -->
+              <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%); pointer-events: none; border-radius: 50%;"></div>
+              
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <div>
+                  <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; background: linear-gradient(90deg, var(--accent), #a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>📸 Premium AI Photo Scanner</span>
+                  </h3>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">Snap or drag a food picture to log instantly with Gemini AI</p>
+                </div>
+                <span class="badge" style="background: rgba(45, 212, 191, 0.1); color: var(--accent); font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid rgba(45, 212, 191, 0.2); text-transform: uppercase; letter-spacing: 0.05em;">AI Active</span>
+              </div>
+
+              <!-- Upload/Dropzone Area -->
+              <div id="scan-dropzone" style="border: 2px dashed rgba(45, 212, 191, 0.3); border-radius: var(--radius); padding: 2.25rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s var(--ease); background: rgba(0, 0, 0, 0.25); position: relative; overflow: hidden;" onclick="triggerImageInput()">
+                <div style="font-size: 2.5rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 12px rgba(45, 212, 191, 0.2)); transition: transform 0.2s var(--ease);" class="scanner-icon">📷</div>
+                <span id="scan-prompt" style="font-size: 0.9rem; font-weight: 600; color: var(--text); display: block; margin-bottom: 0.25rem;">Drop your meal photo here</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">or click to browse filesystem</span>
+                <input type="file" id="scan-image-input" accept="image/*" style="display: none;" onchange="handleImageUpload(event)" />
+              </div>
+
+              <!-- Preview & Results overlay -->
+              <div id="scan-preview-container" style="display: none; margin-top: 1.25rem;">
+                <div style="display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap;">
+                  
+                  <!-- Left side: Preview Image -->
+                  <div style="flex: 1; min-width: 150px; text-align: center; position: relative;">
+                    <img id="scan-preview" src="#" alt="Food Preview" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow);" />
+                    <div id="scan-status" style="font-size: 0.8rem; color: var(--accent); font-weight: 700; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: center; gap: 0.25rem;">
+                      <span class="pulse-dot" style="width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; display: inline-block;"></span>
+                      Analyzing Photo...
+                    </div>
+                  </div>
+
+                  <!-- Right side: AI Results Details -->
+                  <div id="scan-results" style="display: none; flex: 1.5; min-width: 220px; background: rgba(0, 0, 0, 0.3); padding: 1rem; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
+                    
+                    <!-- Result Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
+                      <strong id="result-food-name" style="color: var(--text); font-size: 1rem;">—</strong>
+                      <span id="result-confidence" style="background: rgba(45, 212, 191, 0.1); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: var(--radius-sm); border: 1px solid rgba(45, 212, 191, 0.2);">—</span>
+                    </div>
+
+                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                      Base Calories: <span id="result-kcal-100g" style="color: var(--text); font-weight: 600;">0</span> kcal / 100g
+                    </div>
+
+                    <!-- Input for food weight & meal type -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                      <div>
+                        <label for="result-weight" style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.25rem;">Weight (g)</label>
+                        <input type="number" id="result-weight" value="100" min="1" oninput="recalculateScanNutrition()" style="width: 100%; padding: 0.5rem 0.75rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 0.875rem;" />
+                      </div>
+                      <div>
+                        <label for="scan-meal-type" style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.25rem;">Meal Type</label>
+                        <select id="scan-meal-type" style="width: 100%; padding: 0.5rem 0.75rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 0.875rem;">
+                          <option value="breakfast">Breakfast</option>
+                          <option value="lunch" selected>Lunch</option>
+                          <option value="dinner">Dinner</option>
+                          <option value="snacks">Snacks</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Live calculated Nutrition stats (grid layout) -->
+                    <div style="background: rgba(0, 0, 0, 0.2); border-radius: var(--radius-sm); padding: 0.65rem; display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; gap: 0.25rem; border: 1px solid var(--border); margin-bottom: 0.75rem;">
+                      <div>
+                        <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Calories</div>
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text);" id="sum-kcal">0</div>
+                      </div>
+                      <div>
+                        <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Protein</div>
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent);" id="sum-p">0g</div>
+                      </div>
+                      <div>
+                        <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Carbs</div>
+                        <div style="font-size: 0.85rem; font-weight: 700; color: #3b82f6;" id="sum-c">0g</div>
+                      </div>
+                      <div>
+                        <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Fat</div>
+                        <div style="font-size: 0.85rem; font-weight: 700; color: #f59e0b;" id="sum-f">0g</div>
+                      </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-block" onclick="logScanResult()" style="margin: 0; padding: 0.65rem 1rem;">Log Meal</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" id="food-panel">
+              <h3>Food</h3>
+              <!-- Autocomplete Search for Preset & Indian Food Dataset -->
+              <div class="search-food-container" style="position: relative; margin-bottom: 0.75rem;">
+                <input type="text" id="food-search-input" placeholder="Search 1000+ foods (e.g. Garam Chai, Paneer)..." autocomplete="off" style="width: 100%;" />
+                <div id="food-search-results" class="search-results-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); z-index: 1000; max-height: 250px; overflow-y: auto; box-shadow: var(--shadow); margin-top: 4px;"></div>
+              </div>
+
+              <!-- Selected Food Details / Portion Calculator -->
+              <div id="selected-food-calculator" style="display: none; margin-bottom: 0.75rem; padding: 0.85rem; border: 1px dashed var(--border); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.02); transition: all 0.3s var(--ease);">
+                <div style="font-size: 0.875rem; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem;" id="calc-food-name">Selected: —</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <div>
+                    <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Weight (g)</label>
+                    <input type="number" id="calc-food-weight" value="100" min="1" style="padding: 0.4rem 0.6rem; font-size: 0.85rem; width: 100%;" />
+                  </div>
+                  <div>
+                    <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Calories (kcal)</label>
+                    <div id="calc-food-calories" style="padding: 0.4rem 0.6rem; font-size: 0.85rem; background: var(--bg-deep); border-radius: var(--radius-sm); color: var(--text); border: 1px solid var(--border); height: 34px; line-height: 18px;">—</div>
+                  </div>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Meal Category</label>
+                  <select id="calc-food-meal-type" style="padding: 0.4rem 0.6rem; font-size: 0.85rem; width: 100%; height: 34px; background: var(--bg-deep); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch" selected>Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snacks">Snacks</option>
+                  </select>
+                </div>
+                <div style="display: flex; gap: 0.75rem; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                  <span>Protein: <strong id="calc-food-protein" style="color: var(--text);">0</strong>g</span>
+                  <span>Carbs: <strong id="calc-food-carbs" style="color: var(--text);">0</strong>g</span>
+                  <span>Fat: <strong id="calc-food-fat" style="color: var(--text);">0</strong>g</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                  <button type="button" class="btn btn-primary btn-sm" onclick="logSearchFood()" style="flex: 1; padding: 0.4rem 0.5rem; font-size: 0.8rem; margin: 0;">Log Food</button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="cancelSearchFoodSelection()" style="padding: 0.4rem 0.5rem; font-size: 0.8rem; border-color: var(--border); margin: 0;">Cancel</button>
+                </div>
+              </div>
+
+              <div class="custom-food">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <h4 style="margin: 0;">Custom food</h4>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="openCatalogModal('food')" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; border-color: transparent;">⚙️ Manage</button>
+                </div>
+                <div class="input-row">
+                  <input type="text" id="custom-food-name" placeholder="Name" />
+                  <input type="number" id="custom-food-calories-per-100g" placeholder="kcal / 100g" step="any" />
+                  <input type="number" id="custom-food-weight" placeholder="Weight (g)" step="any" />
+                  <input type="number" id="custom-food-protein" placeholder="Protein / 100g" step="any" />
+                  <input type="number" id="custom-food-carbs" placeholder="Carbs / 100g" step="any" />
+                  <input type="number" id="custom-food-fat" placeholder="Fat / 100g" step="any" />
+                </div>
+                <select id="custom-food-meal-type" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 0.9375rem; margin-top: 0.5rem; margin-bottom: 0.25rem;">
+                  <option value="breakfast">Breakfast</option>
+                  <option value="lunch" selected>Lunch</option>
+                  <option value="dinner">Dinner</option>
+                  <option value="snacks">Snacks</option>
+                </select>
+                <button type="button" class="btn btn-secondary btn-block" onclick="addCustomFood()">Add custom &amp; log</button>
+              </div>
+
+              <!-- Removed AI scanner section since it has been moved to its own premium card above -->
+            </div>
+
+            <div class="panel" id="exercise-panel">
+              <h3>Exercise</h3>
+              <select id="exercise-options" aria-label="Choose exercise">
+                <option value="">Choose exercise…</option>
+                <option value="Jogging|120">Jogging (120 kcal / 10 min)</option>
+                <option value="Cycling|150">Cycling (150 kcal / 10 min)</option>
+                <option value="Push-ups|100">Push-ups (100 kcal / 10 min)</option>
+                <option value="Running (Fast)|150">Running (Fast) (150 kcal / 10 min)</option>
+                <option value="Swimming|130">Swimming (130 kcal / 10 min)</option>
+                <option value="Jump Rope|160">Jump Rope (160 kcal / 10 min)</option>
+                <option value="Weightlifting|80">Weightlifting (80 kcal / 10 min)</option>
+                <option value="HIIT Workout|140">HIIT Workout (140 kcal / 10 min)</option>
+                <option value="Yoga|45">Yoga (45 kcal / 10 min)</option>
+                <option value="Walking (Brisk)|50">Walking (Brisk) (50 kcal / 10 min)</option>
+                <option value="Stair Climber|120">Stair Climber (120 kcal / 10 min)</option>
+                <option value="Rowing Machine|110">Rowing Machine (110 kcal / 10 min)</option>
+                <option value="Abs Circuit|70">Abs Circuit (70 kcal / 10 min)</option>
+                <option value="Zumba Dancing|90">Zumba Dancing (90 kcal / 10 min)</option>
+                <option value="Boxing|130">Boxing (130 kcal / 10 min)</option>
+              </select>
+              <button type="button" class="btn btn-primary btn-block" onclick="startExercise()">Start timer</button>
+              <button type="button" class="btn btn-secondary btn-block" onclick="stopExercise()">Stop &amp; log burn</button>
+              <div id="timer-display" aria-live="polite">00:00</div>
+              <div class="watch-interface">
+                <div class="watch-face">
+                  <div id="watch-time">00:00</div>
+                </div>
+              </div>
+              <a href="https://youtu.be/XFpT41748hM" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-block btn-sm" style="margin-bottom: 1rem;">Watch demo</a>
+
+              <div class="custom-exercise" style="border-top: 1px solid var(--border); padding-top: 1rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <h4 style="margin: 0;">Custom exercise</h4>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="openCatalogModal('exercise')" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; border-color: transparent;">⚙️ Manage</button>
+                </div>
+                <div class="input-row" style="margin-bottom: 0.5rem;">
+                  <input type="text" id="custom-exercise-name" placeholder="Name" style="width: 100%; margin-bottom: 0.25rem;" />
+                  <input type="number" id="custom-exercise-calories" placeholder="kcal / 10 min" step="any" style="width: 100%;" />
+                </div>
+                <button type="button" class="btn btn-secondary btn-block" onclick="addCustomExercise()">Add custom exercise</button>
+              </div>
+            </div>
+
+            <!-- Macro Goals Card as a panel adjacent to exercise -->
+            <div class="panel macro-goals" id="macro-goals-panel">
+              <h3>Daily Macro Goals</h3>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <div>
+                  <label for="goal-protein" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Protein (g)</label>
+                  <input type="number" id="goal-protein" value="100" step="any" style="width: 100%; padding: 0.5rem 0.75rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 0.9375rem;" />
+                </div>
+                <div>
+                  <label for="goal-carbs" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Carbs (g)</label>
+                  <input type="number" id="goal-carbs" value="250" step="any" style="width: 100%; padding: 0.5rem 0.75rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 0.9375rem;" />
+                </div>
+                <div>
+                  <label for="goal-fat" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Fat (g)</label>
+                  <input type="number" id="goal-fat" value="70" step="any" style="width: 100%; padding: 0.5rem 0.75rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 0.9375rem;" />
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-block" onclick="updateMacroGoals()" style="padding: 0.55rem 0.75rem; font-size: 0.85rem; margin: 0;">Apply goals</button>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <label for="filter-type">Activity filter</label>
+            <select id="filter-type">
+              <option value="all">All</option>
+              <option value="food">Food</option>
+              <option value="exercise">Exercise</option>
+            </select>
+          </div>
+          <div id="activity-log"></div>
+
+          <div class="dashboard-row-grid">
+            <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 360px;">
+              <h4 class="card-title" style="align-self: flex-start; margin-bottom: 0.5rem;">Macros Breakdown</h4>
+              <div class="chart-wrap" style="margin: 0; width: 100%; max-width: 280px; min-height: unset;">
+                <canvas id="macroPieChart" aria-label="Macro pie chart"></canvas>
+              </div>
+            </div>
+            <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 360px;">
+              <h4 class="card-title" style="align-self: flex-start; margin-bottom: 0.5rem;">Food consumed vs Exercise burned</h4>
+              <div class="chart-wrap" style="margin: 0; width: 100%; max-width: 280px; min-height: unset;">
+                <canvas id="pieChart" aria-label="Food versus exercise chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weekly Analytics Dashboard Card -->
+          <div class="analytics-chart-container">
+            <h3 class="card-title" style="margin-bottom: 1.25rem;">📈 Weekly Analytics & Trends</h3>
+            <div class="dashboard-row-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 0;">
+              <div style="display: flex; flex-direction: column; min-height: 250px;">
+                <h4 class="card-title" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Steps Traveled (7-Day Trend)</h4>
+                <div class="chart-wrap" style="margin: 0; width: 100%; height: 100%; min-height: 200px;">
+                  <canvas id="weeklyStepsChart" aria-label="Weekly steps chart"></canvas>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; min-height: 250px;">
+                <h4 class="card-title" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Calories Eaten vs Burned (7-Day Trend)</h4>
+                <div class="chart-wrap" style="margin: 0; width: 100%; height: 100%; min-height: 200px;">
+                  <canvas id="weeklyCaloriesChart" aria-label="Weekly calories chart"></canvas>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; min-height: 250px;">
+                <h4 class="card-title" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Weight Tracker (7-Day Trend)</h4>
+                <div class="chart-wrap" style="margin: 0; width: 100%; height: 100%; min-height: 200px;">
+                  <canvas id="weeklyWeightChart" aria-label="Weekly weight chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="workout-plan-section">
+            <h3>Weekly workout plan</h3>
+            <p class="section-desc" style="margin-bottom: 1rem;">Generated from your goal when you calculate targets above.</p>
+            <div id="workout-container"></div>
+          </div>
+
+          <div class="diet-chart">
+            <h3>Suggested day of eating</h3>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Meal</th>
+                    <th>Food</th>
+                    <th>kcal</th>
+                    <th>P</th>
+                    <th>C</th>
+                    <th>F</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="diet-chart-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tracker-cta">
+            <a href="/plans" class="btn btn-primary">Personalized trainer (AI)</a>
+            <button type="button" class="link-help" onclick="getHelp('tracker')">Questions about tracking? →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="chatbot" class="section container ai-section">
+      <header class="section-head">
+        <p class="section-kicker">AI coach</p>
+        <h2 class="section-title">Chat on any device</h2>
+        <p class="section-desc">Quick prompts below. With your Node server running, replies come from the API; otherwise you still get offline fitness tips.</p>
+      </header>
+
+      <div class="ai-layout">
+        <aside class="ai-sidebar" aria-label="Suggested questions">
+          <div class="coach-visual">
+            <img id="coach-img" src="/images/ai_coach_dark.png" alt="AI Fitness Coach" class="responsive-graphic" style="max-width: 160px; margin: 0 auto 1.25rem; border-radius: 50%;" />
+          </div>
+          <!-- Proactive AI coaching audit panel -->
+          <div style="background: rgba(45, 212, 191, 0.05); border: 1px dashed var(--accent); border-radius: var(--radius-sm); padding: 0.75rem; margin-bottom: 1.25rem; text-align: center;">
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0 0 0.5rem 0; font-weight: 600; line-height: 1.4;">Let the AI coach review your daily food &amp; activity logs.</p>
+            <button type="button" class="btn btn-primary btn-sm btn-block" onclick="analyzeMyDay()" style="margin: 0; padding: 0.45rem 0.75rem; font-size: 0.8rem;">📊 Analyze My Day</button>
+          </div>
+          <h3>Try asking</h3>
+          <button type="button" class="prompt-chip" data-prompt="How much protein should I aim for per day?">Protein targets</button>
+          <button type="button" class="prompt-chip" data-prompt="What is a simple habit to lose fat sustainably?">Sustainable fat loss</button>
+          <button type="button" class="prompt-chip" data-prompt="Ideas for a balanced lunch under 600 calories?">Lunch ideas</button>
+          <button type="button" class="prompt-chip" data-prompt="How do I stay hydrated around workouts?">Hydration</button>
+          <button type="button" class="prompt-chip" data-prompt="Give me a simple one-day vegetarian diet plan with meals and snacks.">Veg diet plan</button>
+          <button type="button" class="link-help" onclick="getHelp('chatbot')">Context help</button>
+        </aside>
+
+        <div class="chat-shell">
+          <div class="chat-header" style="display: flex; justify-content: space-between; align-items: center; position: relative;">
+            <h2>Fitness Buddy coach</h2>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span class="chat-status" id="chat-status">Ready</span>
+              <button type="button" id="chat-settings-toggle" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 0.25rem; color: var(--text-muted); transition: color 0.2s;" title="AI Settings">⚙️</button>
+            </div>
+          </div>
+          
+          <div id="chat-settings-panel" style="display: none; background: var(--bg-elevated); border-bottom: 1px solid var(--border); padding: 1rem; border-radius: 0 0 var(--radius-sm) var(--radius-sm);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <h3 style="font-size: 0.875rem; margin: 0; font-weight: 600; color: var(--accent);">⚙️ AI Coach Settings</h3>
+              <button type="button" id="close-chat-settings" style="background: none; border: none; color: var(--text-muted); font-size: 0.75rem; cursor: pointer;">Close</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.8125rem;">
+              <div>
+                <label for="chat-provider" style="display: block; font-weight: 600; margin-bottom: 0.25rem; color: var(--text-muted);">AI Provider</label>
+                <select id="chat-provider" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text);">
+                  <option value="gemini">Google Gemini (Gemini 1.5 Flash)</option>
+                  <option value="openrouter">OpenRouter AI (Multi-model)</option>
+                  <option value="openai">OpenAI (GPT-4o-mini)</option>
+                </select>
+              </div>
+              <div id="chat-model-wrapper" style="display: none;">
+                <label for="chat-model" style="display: block; font-weight: 600; margin-bottom: 0.25rem; color: var(--text-muted);">Model Name</label>
+                <input type="text" id="chat-model" placeholder="e.g. liquid/lfm-2.5-1.2b-instruct:free" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text);" />
+              </div>
+              <div>
+                <label for="chat-apikey" style="display: block; font-weight: 600; margin-bottom: 0.25rem; color: var(--text-muted);">API Key</label>
+                <input type="password" id="chat-apikey" placeholder="Enter custom API Key" style="width: 100%; padding: 0.45rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text);" />
+              </div>
+              <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.25rem;">
+                <button type="button" id="clear-chat-settings" class="btn btn-secondary btn-sm" style="margin: 0; padding: 0.35rem 0.75rem; font-size: 0.75rem;">Clear Key</button>
+                <button type="button" id="save-chat-settings" class="btn btn-primary btn-sm" style="margin: 0; padding: 0.35rem 0.75rem; font-size: 0.75rem;">Save Settings</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+          <div class="chat-input-row">
+            <input type="text" id="user-input" placeholder="Ask about nutrition, training, or recovery…" autocomplete="off" />
+            <button type="button" id="send-btn">Send</button>
+          </div>
+        </div>
+      </div>
+      <p class="ai-disclaimer">For education only — not medical advice. For health conditions, talk to a qualified professional.</p>
+    </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Fitness Buddy</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="main.js"></script>
+  <script>
+    let macroChart;
+
+    function updateMacroPieChart() {
+      const el = document.getElementById("macroPieChart");
+      if (!el || typeof Chart === "undefined") return;
+      const ctx = el.getContext("2d");
+      const data = {
+        labels: ["Protein (g)", "Carbs (g)", "Fat (g)"],
+        datasets: [
+          {
+            data: [
+              typeof totalProtein !== "undefined" ? totalProtein : 0,
+              typeof totalCarbs !== "undefined" ? totalCarbs : 0,
+              typeof totalFat !== "undefined" ? totalFat : 0,
+            ],
+            backgroundColor: ["#2dd4bf", "#60a5fa", "#f472b6"],
+            borderWidth: 0,
+          },
+        ],
+      };
+
+      if (macroChart) {
+        macroChart.data.datasets[0].data = data.datasets[0].data;
+        macroChart.update();
+      } else {
+        macroChart = new Chart(ctx, {
+          type: "doughnut",
+          data: data,
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: { position: "bottom", labels: { color: "#8b98a8", padding: 16 } },
+            },
+          },
+        });
+      }
+    }
+  </script>
+  <script>
+    function addCustomFood() {
+      const nameInput = document.getElementById("custom-food-name");
+      const caloriesInput = document.getElementById("custom-food-calories-per-100g");
+      const weightInput = document.getElementById("custom-food-weight");
+      const proteinInput = document.getElementById("custom-food-protein");
+      const carbsInput = document.getElementById("custom-food-carbs");
+      const fatInput = document.getElementById("custom-food-fat");
+
+      const name = nameInput.value.trim();
+      const caloriesPer100g = parseFloat(caloriesInput.value);
+      const weight = parseFloat(weightInput.value);
+      const proteinPer100g = parseFloat(proteinInput.value);
+      const carbsPer100g = parseFloat(carbsInput.value);
+      const fatPer100g = parseFloat(fatInput.value);
+
+      if (!name) {
+        alert("Please enter a food name.");
+        return;
+      }
+      if (isNaN(caloriesPer100g) || caloriesPer100g <= 0) {
+        alert("Please enter valid calories per 100g.");
+        return;
+      }
+      if (isNaN(weight) || weight <= 0) {
+        alert("Please enter a valid weight in grams.");
+        return;
+      }
+      if (isNaN(proteinPer100g) || proteinPer100g < 0) {
+        alert("Please enter valid protein per 100g.");
+        return;
+      }
+      if (isNaN(carbsPer100g) || carbsPer100g < 0) {
+        alert("Please enter valid carbs per 100g.");
+        return;
+      }
+      if (isNaN(fatPer100g) || fatPer100g < 0) {
+        alert("Please enter valid fat per 100g.");
+        return;
+      }
+
+      const totalCalories = (caloriesPer100g * weight) / 100;
+      const totalProtein = (proteinPer100g * weight) / 100;
+      const totalCarbs = (carbsPer100g * weight) / 100;
+      const totalFat = (fatPer100g * weight) / 100;
+
+      const select = document.getElementById("food-options");
+      const option = document.createElement("option");
+      option.value = `${name}|${totalCalories.toFixed(2)}`;
+      option.textContent = `${name} (${totalCalories.toFixed(2)} kcal for ${weight}g)`;
+      option.dataset.protein = totalProtein.toFixed(2);
+      option.dataset.carbs = totalCarbs.toFixed(2);
+      option.dataset.fat = totalFat.toFixed(2);
+      select.appendChild(option);
+
+      addActivity(
+        "food",
+        name,
+        parseFloat(totalCalories.toFixed(2)),
+        parseFloat(totalProtein.toFixed(2)),
+        parseFloat(totalCarbs.toFixed(2)),
+        parseFloat(totalFat.toFixed(2))
+      );
+      updateUI();
+
+      nameInput.value = "";
+      caloriesInput.value = "";
+      weightInput.value = "";
+      proteinInput.value = "";
+      carbsInput.value = "";
+      fatInput.value = "";
+    }
+  </script>
+  <script src="chatbot.js"></script>
+  <script>
+    function getHelp(context) {
+      const userInput = document.getElementById("user-input");
+      const prompt = {
+        hero: "Welcome! Start with your profile in Tracker, log a meal or workout, then open AI Coach for questions.",
+        features: "You get macro tracking, an exercise timer, BMR-based targets, charts, and this chat. Tap Start tracking to try it.",
+        tracker: "Enter weight, height, age, gender, and goal — then Get calorie & macro targets. Add foods from the list or custom entries, and use Start timer / Stop to log exercise.",
+        chatbot: "Type a question or use a quick prompt on the left. If your API server is running you get full replies; otherwise I still share offline tips.",
+      };
+      if (typeof window.appendCoachMessage === "function") {
+        window.appendCoachMessage(prompt[context] || "How can I help?");
+      }
+      const messages = document.getElementById("messages");
+      if (messages) messages.scrollTop = messages.scrollHeight;
+      if (userInput) userInput.value = "";
+      window.location.hash = "chatbot";
+      if (userInput) userInput.focus();
+    }
+
+    document.getElementById("nav-toggle")?.addEventListener("click", function () {
+      const open = document.body.classList.toggle("nav-open");
+      this.setAttribute("aria-expanded", open);
+      this.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        document.body.classList.remove("nav-open");
+        const t = document.getElementById("nav-toggle");
+        if (t) {
+          t.setAttribute("aria-expanded", "false");
+          t.setAttribute("aria-label", "Open menu");
+        }
+      });
+    });
+  </script>
+
+  <script>
+    async function setAuthUIFromServer() {
+      const app = document.getElementById("app-content");
+      const loginItem = document.getElementById("nav-login-item");
+      const profileItem = document.getElementById("nav-profile-item");
+      const logoutNavItem = document.getElementById("nav-logout-item");
+      const profileEmail = document.getElementById("profile-email");
+
+      try {
+        const r = await fetch("/api/auth/me", { credentials: "include" });
+        const loggedIn = r.ok;
+        const payload = await r.json().catch(() => ({}));
+        if (app) app.style.display = loggedIn ? "" : "none";
+        if (loginItem) loginItem.style.display = loggedIn ? "none" : "";
+        if (profileItem) profileItem.style.display = loggedIn ? "list-item" : "none";
+        if (logoutNavItem) logoutNavItem.style.display = loggedIn ? "list-item" : "none";
+        if (profileEmail) profileEmail.textContent = payload?.user?.email || "—";
+        if (!loggedIn) window.location.href = "/login.html";
+      } catch (_) {
+        window.location.href = "/login.html";
+      }
+    }
+
+    function closeProfileMenu() {
+      const menu = document.getElementById("profile-menu");
+      const trigger = document.getElementById("profile-trigger");
+      if (!menu || !trigger) return;
+      menu.classList.remove("is-open");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function toggleProfileMenu() {
+      const menu = document.getElementById("profile-menu");
+      const trigger = document.getElementById("profile-trigger");
+      if (!menu || !trigger) return;
+      const open = menu.classList.toggle("is-open");
+      trigger.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    async function logout() {
+      try {
+        await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
+      } catch (_) {}
+      window.location.href = "/login.html";
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("logout-btn")?.addEventListener("click", logout);
+      document.getElementById("header-logout-btn")?.addEventListener("click", function () {
+        document.body.classList.remove("nav-open");
+        const t = document.getElementById("nav-toggle");
+        if (t) {
+          t.setAttribute("aria-expanded", "false");
+          t.setAttribute("aria-label", "Open menu");
+        }
+        logout();
+      });
+      document.getElementById("profile-trigger")?.addEventListener("click", function (e) {
+        e.stopPropagation();
+        toggleProfileMenu();
+      });
+      document.addEventListener("click", function () {
+        closeProfileMenu();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeProfileMenu();
+      });
+      setAuthUIFromServer();
+    });
+  </script>
+
+  <script>
+    function generateWorkoutPlan() {
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const age = parseInt(document.getElementById("age").value, 10);
+      const gender = document.getElementById("gender").value;
+      const goal = document.getElementById("goal").value;
+
+      if (isNaN(weight) || isNaN(height) || isNaN(age) || !gender || !goal) {
+        return;
+      }
+
+      const planMap = {
+        lose: [
+          { day: "Monday", workout: "HIIT + brisk walking" },
+          { day: "Tuesday", workout: "Core + cardio circuit" },
+          { day: "Wednesday", workout: "Yoga + jump rope" },
+          { day: "Thursday", workout: "Pilates + stair climbing" },
+          { day: "Friday", workout: "Cycling + abs" },
+          { day: "Saturday", workout: "Dance + stretching" },
+          { day: "Sunday", workout: "Rest or light activity" },
+        ],
+        gain: [
+          { day: "Monday", workout: "Chest + triceps" },
+          { day: "Tuesday", workout: "Back + biceps" },
+          { day: "Wednesday", workout: "Legs + core" },
+          { day: "Thursday", workout: "Shoulders + arms" },
+          { day: "Friday", workout: "Full body heavy" },
+          { day: "Saturday", workout: "Light cardio + mobility" },
+          { day: "Sunday", workout: "Recovery walk" },
+        ],
+        maintain: [
+          { day: "Monday", workout: "Jog + strength circuit" },
+          { day: "Tuesday", workout: "Yoga + stability" },
+          { day: "Wednesday", workout: "Bodyweight training" },
+          { day: "Thursday", workout: "Cardio + strength mix" },
+          { day: "Friday", workout: "Cycling + core" },
+          { day: "Saturday", workout: "Walk + yoga flow" },
+          { day: "Sunday", workout: "Active recovery" },
+        ],
+      };
+
+      const container = document.getElementById("workout-container");
+      container.innerHTML = "";
+      const selectedPlan = planMap[goal] || [];
+      selectedPlan.forEach(function ({ day, workout }) {
+        const card = document.createElement("div");
+        card.className = "workout-card";
+        card.dataset.workout = workout;
+        card.innerHTML = "<strong>" + day + "</strong><br>" + workout +
+          "<br><button type='button' class='btn-quick-log' style='margin-top: 0.5rem; width: 100%; justify-content: center;' onclick='quickLogWorkout(\"" + workout + "\")'>➕ Log Workout</button>";
+        container.appendChild(card);
+      });
+      updateExerciseOptionsFromWorkoutPlan();
+    }
+
+    function updateExerciseOptionsFromWorkoutPlan() {
+      const workoutContainer = document.getElementById("workout-container");
+      const exerciseSelect = document.getElementById("exercise-options");
+      const optionsSet = new Set();
+      workoutContainer.querySelectorAll(".workout-card").forEach(function (card) {
+        const workoutText = card.dataset.workout || "";
+        workoutText.split("+").forEach(function (item) {
+          const trimmed = item.trim();
+          if (trimmed) optionsSet.add(trimmed);
+        });
+      });
+      exerciseSelect.innerHTML = '<option value="">Choose exercise…</option>';
+      optionsSet.forEach(function (ex) {
+        const opt = document.createElement("option");
+        opt.value = ex + "|100";
+        opt.textContent = ex + " (100 kcal / 10 min)";
+        exerciseSelect.appendChild(opt);
+      });
+    }
+
+    document.querySelector('button[onclick="calculateSmartNutrition()"]').addEventListener("click", generateWorkoutPlan);
+  </script>
+  <script>
+    function generateDynamicDietChart() {
+      const age = parseInt(document.getElementById("age").value, 10);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const gender = document.getElementById("gender").value;
+      const goal = document.getElementById("goal").value;
+
+      if (isNaN(age) || isNaN(weight) || isNaN(height) || !gender || !goal) {
+        return;
+      }
+
+      const tbody = document.getElementById("diet-chart-body");
+      tbody.innerHTML = "";
+      let meals = [];
+
+      if (goal === "lose") {
+        meals = [
+          { meal: "Breakfast", food: "Boiled eggs + toast", calories: 200, protein: 12, carbs: 15, fat: 8 },
+          { meal: "Snack", food: "Apple", calories: 95, protein: 0.5, carbs: 25, fat: 0.3 },
+          { meal: "Lunch", food: "Grilled chicken salad", calories: 350, protein: 30, carbs: 10, fat: 15 },
+          { meal: "Snack", food: "Greek yogurt", calories: 100, protein: 10, carbs: 8, fat: 2 },
+          { meal: "Dinner", food: "Steamed veggies + tofu", calories: 250, protein: 15, carbs: 20, fat: 10 },
+        ];
+      } else if (goal === "gain") {
+        meals = [
+          { meal: "Breakfast", food: "Oats + banana + peanut butter", calories: 400, protein: 12, carbs: 45, fat: 18 },
+          { meal: "Snack", food: "Protein shake", calories: 250, protein: 25, carbs: 10, fat: 5 },
+          { meal: "Lunch", food: "Chicken + rice", calories: 600, protein: 40, carbs: 50, fat: 20 },
+          { meal: "Snack", food: "Nuts + dates", calories: 300, protein: 10, carbs: 30, fat: 15 },
+          { meal: "Dinner", food: "Paneer or fish + roti + veggies", calories: 550, protein: 35, carbs: 40, fat: 18 },
+        ];
+      } else {
+        meals = [
+          { meal: "Breakfast", food: "Oatmeal + berries", calories: 300, protein: 8, carbs: 40, fat: 5 },
+          { meal: "Snack", food: "Boiled egg", calories: 80, protein: 6, carbs: 1, fat: 5 },
+          { meal: "Lunch", food: "Rice + dal + veggies", calories: 450, protein: 18, carbs: 60, fat: 12 },
+          { meal: "Snack", food: "Fruit bowl", calories: 150, protein: 2, carbs: 30, fat: 1 },
+          { meal: "Dinner", food: "Grilled paneer + salad", calories: 400, protein: 20, carbs: 15, fat: 20 },
+        ];
+      }
+
+      meals.forEach(function ({ meal, food, calories, protein, carbs, fat }) {
+        const row = document.createElement("tr");
+        row.innerHTML =
+          "<td>" + meal + "</td>" +
+          "<td>" + food + "</td>" +
+          "<td>" + calories + "</td>" +
+          "<td>" + protein + "</td>" +
+          "<td>" + carbs + "</td>" +
+          "<td>" + fat + "</td>" +
+          "<td><button type='button' class='btn-quick-log' onclick='quickLogMeal(\"" + food + "\", " + calories + ", " + protein + ", " + carbs + ", " + fat + ")'>➕ Add</button></td>";
+        tbody.appendChild(row);
+      });
+
+      if (typeof updateMacroPieChart === "function") updateMacroPieChart();
+      localStorage.setItem("dietChart", JSON.stringify(meals));
+    }
+
+    document.querySelector('button[onclick="calculateSmartNutrition()"]').addEventListener("click", generateDynamicDietChart);
+
+    window.addEventListener("DOMContentLoaded", function () {
+      const saved = localStorage.getItem("dietChart");
+      if (!saved) return;
+      const tbody = document.getElementById("diet-chart-body");
+      tbody.innerHTML = "";
+      JSON.parse(saved).forEach(function ({ meal, food, calories, protein, carbs, fat }) {
+        const row = document.createElement("tr");
+        row.innerHTML =
+          "<td>" + meal + "</td>" +
+          "<td>" + food + "</td>" +
+          "<td>" + calories + "</td>" +
+          "<td>" + protein + "</td>" +
+          "<td>" + carbs + "</td>" +
+          "<td>" + fat + "</td>" +
+          "<td><button type='button' class='btn-quick-log' onclick='quickLogMeal(\"" + food + "\", " + calories + ", " + protein + ", " + carbs + ", " + fat + ")'>➕ Add</button></td>";
+        tbody.appendChild(row);
+      });
+    });
+  </script>
+
+  <!-- Catalog Manager Modal Overlay -->
+  <div id="catalog-modal" class="modal-overlay" onclick="closeCatalogModalOutside(event)">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="catalog-modal-title">Manage Custom Items</h3>
+        <button type="button" class="modal-close-btn" onclick="closeCatalogModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="catalog-modal-list" class="catalog-list">
+          <!-- Items will be dynamically loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
