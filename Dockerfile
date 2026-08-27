@@ -4,6 +4,7 @@ FROM node:20-bookworm-slim
 
 WORKDIR /app
 ENV NODE_ENV=production
+ENV BUST_CACHE=1
 
 COPY package*.json ./
 RUN npm ci --omit=dev
