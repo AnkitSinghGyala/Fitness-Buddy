@@ -187,7 +187,7 @@ const db = {
 };
 
 function importIndianFoodDataset() {
-  const csvPath = "/Users/ankitsinghgyala/Downloads/fitness-buddy-deployable/Indian_Food_Nutrition_Processed.csv";
+  const csvPath = path.join(__dirname, "Indian_Food_Nutrition_Processed.csv");
   if (!fs.existsSync(csvPath)) {
     console.log("Indian food dataset CSV not found at", csvPath);
     return;
