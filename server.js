@@ -188,7 +188,7 @@ const db = {
   }
 };
 
-function importIndianFoodDataset() {
+function importIndianFoodDataset(retryCount = 0) {
   const csvPath = path.join(__dirname, "Indian_Food_Nutrition_Processed.csv");
   if (!fs.existsSync(csvPath)) {
     console.log("Indian food dataset CSV not found at", csvPath);
@@ -197,7 +197,10 @@ function importIndianFoodDataset() {
 
   db.get("SELECT COUNT(*) as count FROM food_dataset", (err, row) => {
     if (err) {
-      console.error("Error checking food dataset size:", err);
+      console.error(`Error checking food dataset size (Attempt ${retryCount + 1}):`, err.message);
+      if (retryCount < 5) {
+        setTimeout(() => importIndianFoodDataset(retryCount + 1), 2000);
+      }
       return;
     }
     if (row && row.count > 0) {
