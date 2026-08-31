@@ -119,7 +119,9 @@ const db = {
           if (callback) callback(err);
         });
     } else {
-      sqliteDb.run(sql, params, callback);
+      sqliteDb.run(sql, params, callback || function(err) {
+        if (err) console.error("SQLite run error:", err.message);
+      });
     }
   },
 
