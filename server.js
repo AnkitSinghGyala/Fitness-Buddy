@@ -911,10 +911,8 @@ app.post("/api/vision", requireAuth, async (req, res) => {
 
     let provider = "openrouter";
     let apiKey = OPENROUTER_API_KEY;
-    let model = OPENROUTER_MODEL || "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free";
-    if (model === "openrouter/free" || model === "liquid/lfm-2.5-1.2b-instruct:free") {
-      model = "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free";
-    }
+    // Always use a known working vision model regardless of the global OPENROUTER_MODEL (which is often text-only)
+    let model = "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free";
     
     if (req.body.customApiKey) {
       provider = req.body.customProvider || "gemini";
