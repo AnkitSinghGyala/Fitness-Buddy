@@ -911,9 +911,9 @@ app.post("/api/vision", requireAuth, async (req, res) => {
 
     let provider = "openrouter";
     let apiKey = OPENROUTER_API_KEY;
-    let model = OPENROUTER_MODEL || "nvidia/nemotron-nano-12b-v2-vl:free";
+    let model = OPENROUTER_MODEL || "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free";
     if (model === "openrouter/free" || model === "liquid/lfm-2.5-1.2b-instruct:free") {
-      model = "nvidia/nemotron-nano-12b-v2-vl:free";
+      model = "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free";
     }
     
     if (req.body.customApiKey) {
